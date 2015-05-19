@@ -1,5 +1,6 @@
 # Ansible Playbook - Setup Hadoop CDH5 Using `tarball`.
 
+
 This is a simple Hadoop playbook, to quickly start hadoop running on in a cluster.
 
 Here is the Script Location on Github: https://github.com/zubayr/ansible_zookeeper_tarball
@@ -54,37 +55,7 @@ Here is the execution. After entering the password you will get the encrypted pa
     $6$rounds=40000$1qjG/hovLZOkcerH$CK4Or3w8rR3KabccowciZZUeD.nIwR/VINUa2uPsmGK/2xnmOt80TjDwbof9rNvnYY6icCkdAR2qrFquirBtT1
     ahmed@ahmed-server ~]$
 
-## Step 3. Update playbook. 
-
-Update file called `ansible_hadoop.yml` (if required) with `hosts` file in root of the directory structure.
-Below is the sample directory structure.
-
-
-    zookeeper.yml
-    hosts
-    global_vars
-      --> all
-    file_archives
-      --> hadoop-2.3.0-cdh5.1.2.tar.gz
-      --> jdk-7u75-linux-x64.tar.gz
-      --> ...
-    roles
-      --> ...
-      
-      
-Below are the contents for `ansible_hadoop.yml`
-
-    #
-    #-----------------------------
-    # ZOOKEEPER CLUSTER SETUP
-    #-----------------------------
-    #
-    
-    - hosts: zookeepernodes
-      remote_user: root
-      roles:
-        - zookeeper_install_tarball
-
+## Step 3. Update Host File. 
 
 IMPORTANT update contents of `hosts` file. 
 In `hosts` file `host_name` is used to create the `/etc/hosts` file. 
@@ -140,13 +111,28 @@ In `hosts` file `host_name` is used to create the `/etc/hosts` file.
     hadoopcluster
 
 
+## Step 4. Post Installation.
+
+This is hadoop user creation after installation.
+If we need more users then we need to add them in role `post_install_setups`.
+
+Current we will create a user called `stormadmin`. More details in `roles/post_install_setups/tasks/create_hadoop_user.yml`
+
+    #
+    # Creating a Storm User on Namenode/ This will eventually be a edge node.
+    #
+    - hosts: namenodes
+      remote_user: root
+      roles:
+        - post_install_setups
 
     
 
-## Step 4. Executing yml.
+## Step 5. Executing yml.
 
 Execute below command. 
 
     ansible-playbook ansible_hadoop.yml -i hosts --ask-pass
     
+
  
