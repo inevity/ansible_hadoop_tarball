@@ -1,0 +1,14 @@
+---
+
+ - name: Create `secondary-namenode` data directory.
+   file: path={{ item }}{{ hadoop_hdfs.dfs_dir_namenode }} owner={{ hadoop_user }} group={{ hadoop_group }} state=directory
+   with_items: hadoop_hdfs.dfs_dir_parent
+
+ - name: Create `secondary namenode` data directory
+   file: path={{ item }}{{ hadoop_hdfs.dfs_dir_sec_namenode }} owner={{ hadoop_user }} group={{ hadoop_group }} state=directory
+   with_items: hadoop_hdfs.dfs_dir_parent
+
+ - name: Starting Secondary Namenode.
+   command: sh {{ common['soft_link_base_path'] }}/hadoop/sbin/hadoop-daemon.sh start secondarynamenode
+   sudo: yes
+   sudo_user: "{{ hadoop_user }}"

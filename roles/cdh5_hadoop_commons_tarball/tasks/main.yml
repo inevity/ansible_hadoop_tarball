@@ -1,0 +1,10 @@
+---
+
+# Creating a hadoop user.
+- include: user.yml
+
+# Installing Hadoop
+- include: install.yml
+
+# Configuring Hadoop.
+- include: configure.yml

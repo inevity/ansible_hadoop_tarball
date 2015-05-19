@@ -1,0 +1,11 @@
+---
+
+ - name: Start Resource Manager.
+   command: sh {{ common['soft_link_base_path'] }}/hadoop/sbin/yarn-daemon.sh start resourcemanager
+   sudo: yes
+   sudo_user: "{{ hadoop_user }}"
+
+ - name: Start Job Hostory Server.
+   command: sh {{ common['soft_link_base_path'] }}/hadoop/sbin/mr-jobhistory-daemon.sh start historyserver
+   sudo: yes
+   sudo_user: "{{ hadoop_user }}"

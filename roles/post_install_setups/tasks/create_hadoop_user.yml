@@ -1,0 +1,28 @@
+---
+
+  - name: Create a User `"{{ storm_user }}"` for all our Hadoop Modules.
+    user: name="{{ storm_user }}" password={{ storm_user }}
+
+  - name: Create /tmp and /var directories in HDFS.
+    command: sh "{{ common['soft_link_base_path'] }}"/hadoop/bin/hadoop fs -mkdir -p {{ item }}
+    sudo: yes
+    sudo_user: "{{ hadoop_user }}"
+    with_items:
+      - "/tmp"
+      - "/var"
+      - "/user/{{ storm_user }}"
+      - "/user/{{ hadoop_user }}"
+
+  - name: Setting Permission for Hadoop /tmp and /var directories.
+    command: sh "{{ common['soft_link_base_path'] }}"/hadoop/bin/hadoop fs -chmod 1777 {{ item }}
+    sudo: yes
+    sudo_user: "{{ hadoop_user }}"
+    with_items:
+      - "/tmp"
+      - "/var"
+
+  - name: Setting Permission for Hadoop /user/{{ storm_user }} directoy.
+    command: sh "{{ common['soft_link_base_path'] }}"/hadoop/bin/hadoop fs -chown {{ storm_user }}:{{ storm_group }} /user/{{ storm_user }}
+    sudo: yes
+    sudo_user: "{{ hadoop_user }}"
+

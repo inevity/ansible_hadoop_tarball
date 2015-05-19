@@ -1,0 +1,4 @@
+---
+
+  - name: Create a User `"{{ hadoop_user }}"` for all our Hadoop Modules.
+    user: name="{{ hadoop_user }}" password={{ hadoop_password }}

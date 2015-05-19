@@ -1,0 +1,24 @@
+---
+  - name: Update sysctl.conf on the server.
+    template: src=sysctl.conf dest=/etc/sysctl.conf owner=root group=root backup=yes mode=0600
+
+  - name: Update limits.conf on the server.
+    template: src=limits.conf dest=/etc/security/limits.conf backup=yes mode=0644
+
+  - name: Update `90-nproc.conf` on the server.
+    template: src="90-nproc.conf" dest=/etc/security/limits.d/ owner=root group=root backup=yes mode=0644
+ 
+  - name: Update `etc/hosts` on the server.
+    template: src=etc_hosts dest=/etc/hosts owner=root group=root backup=yes mode=0644
+
+  - name: Update `{{ hadoop_user }}.conf` on the server.
+    template: src=hdadmin.conf dest=/etc/security/limits.d/{{ hadoop_user }}.conf owner=root group=root backup=yes mode=0644
+
+  - name: Setting `sysctl.conf` configuration.
+    command: sysctl -p
+
+  - name: Update Hostname (/etc/sysconfig/network)
+    lineinfile: dest=/etc/sysconfig/network regexp='^HOSTNAME' line="HOSTNAME={{ host_name }}" state=present
+
+  - name: Setting the Hostname Without a restart.
+    command: hostname {{ host_name }}

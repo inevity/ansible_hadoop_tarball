@@ -1,0 +1,10 @@
+---
+
+  - name: Copy and UnArchive the Package in Destination Server.
+    unarchive: creates={{ common['install_base_path'] }}/{{ hadoop_version }} src=file_archives/{{ hadoop_version }}.tar.gz dest={{ common['install_base_path'] }} owner={{ hadoop_user }} group={{ hadoop_group }}
+
+  - name: Change Directory Permissions.
+    file: path={{ common['install_base_path'] }}/{{ hadoop_version }} owner={{ hadoop_user }} group={{ hadoop_group }} recurse=yes
+
+  - name: Creating a Symbolic Link in {{ common['install_base_path'] }}/hadoop.
+    file: src={{ common['install_base_path'] }}/{{ hadoop_version }} path={{ common['soft_link_base_path'] }}/hadoop state=link owner={{ hadoop_user }} group={{ hadoop_group }}

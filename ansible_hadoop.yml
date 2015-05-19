@@ -1,0 +1,56 @@
+#
+#-----------------------------
+#COMMON INSTALLATIONs
+#-----------------------------
+#
+
+- hosts: allnodes
+  remote_user: root
+  roles:
+    - commons
+    - ssh_known_hosts
+    - jdk
+
+
+#
+#-----------------------------
+# HADOOP CLUSTER SETUP
+#-----------------------------
+#
+
+
+- hosts: hadoopcluster
+  remote_user: root
+  roles:
+    - ssh_password_less
+    - cdh5_hadoop_commons_tarball
+
+- hosts: namenodes
+  remote_user: root
+  roles:
+    - cdh5_hadoop_namenode_active
+
+- hosts: secondarynamenode
+  remote_user: root
+  roles:
+    - cdh5_hadoop_sec_namenode
+
+- hosts: resourcemanager
+  remote_user: root
+  roles:
+    - cdh5_hadoop_resourcemgr
+
+- hosts: datanodes
+  remote_user: root
+  roles:
+    - cdh5_hadoop_datanode
+
+#
+# Creating a Storm User on Namenode/ This will eventually be a edge node.
+#
+- hosts: namenodes
+  remote_user: root
+  roles:
+    - post_install_setups
+
+

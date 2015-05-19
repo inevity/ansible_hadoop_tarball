@@ -1,0 +1,23 @@
+---
+ 
+  - name: Creating Datanode Directory.
+    file: path={{ item }} owner={{ hadoop_user }} group={{ hadoop_group }} state=directory
+    with_items: hadoop_hdfs.dfs_dir_datanode
+ 
+  - name: Creating Yarn Local Directories.
+    file: path={{ item }} owner={{ hadoop_user }} group={{ hadoop_group }} state=directory
+    with_items: hadoop_yarn.yarn_nodemgr_local_dir
+ 
+  - name: Creating Yarn Log Directories.
+    file: path={{ item }} owner={{ hadoop_user }} group={{ hadoop_group }} state=directory
+    with_items: hadoop_yarn.yarn_nodemgr_log_dir
+ 
+  - name: Starting Datanode.
+    command: sh {{ common['soft_link_base_path'] }}/hadoop/sbin/hadoop-daemon.sh start datanode
+    sudo: yes
+    sudo_user: "{{ hadoop_user }}"
+ 
+  - name: Starting Node Manager.
+    command: sh {{ common['soft_link_base_path'] }}/hadoop/sbin/yarn-daemon.sh start nodemanager
+    sudo: yes
+    sudo_user: "{{ hadoop_user }}" 

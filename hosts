@@ -1,0 +1,51 @@
+
+#
+# All pre-prod nodes. 
+#
+[allnodes]
+10.10.18.30 host_name=ahmd-namenode
+10.10.18.31 host_name=ahmd-datanode-01
+10.10.18.32 host_name=ahmd-datanode-02
+10.10.18.34 host_name=ahmd-resourcemanager
+10.10.18.93 host_name=ahmd-secondary-namenode
+10.10.18.94 host_name=ahmd-datanode-03
+10.10.18.95 host_name=ahmd-datanode-04
+
+
+# 
+# hadoop cluster
+#
+
+[namenodes]
+10.10.18.30
+
+[secondarynamenode]
+10.10.18.93
+
+[resourcemanager]
+10.10.18.34
+
+[jobhistoryserver]
+10.10.18.34
+
+[datanodes]
+10.10.18.31
+10.10.18.32
+10.10.18.94
+10.10.18.95
+
+[hadoopcluster:children]
+namenodes
+secondarynamenode
+resourcemanager
+jobhistoryserver
+datanodes
+
+#
+# sshknown hosts list.
+#
+
+[sshknownhosts:children]
+hadoopcluster
+
+
