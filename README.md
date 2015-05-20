@@ -1,11 +1,17 @@
 # Ansible Playbook - Setup Hadoop CDH5 Using `tarball`.
 
 
-This is a simple Hadoop playbook, to quickly start hadoop running on in a cluster.
+This is a simple Hadoop playbook, to quickly start hadoop running in a cluster.
 
 Here is the Script Location on Github: https://github.com/zubayr/ansible_hadoop_tarball
 
 Below are the steps to get started.
+
+## Get the script from Github.
+
+Below is the command to clone. 
+
+    ahmed@ahmed-server ~]$ git clone https://github.com/zubayr/ansible_hadoop_tarball
 
 ## Before we start.
 
@@ -13,11 +19,6 @@ Download [`hadoop-2.3.0-cdh5.1.2.tar.gz`](http://archive.cloudera.com/cdh5/cdh/5
 
 Download [`jdk-7u75-linux-x64.tar.gz`](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html#jdk-7u75-oth-JPR) to `file_archives` directory.
 
-## Get the script from Github.
-
-Below is the command to clone. 
-
-    ahmed@ahmed-server ~]$ git clone https://github.com/zubayr/ansible_hadoop_tarball
 
 ## Step 1. Update below variables as per requirement.
 
@@ -38,7 +39,7 @@ Global Vars can be found in the location `group_vars/all`.
       soft_link_base_path: /opt
 
 
-## Step 2. User information come from `global_vars`.
+## Step 2. User information come from `group_vars`.
 
 Username can be changed in the Global Vars, `zookeeper_user`.
 Currently the password is `hdadmin@123`
@@ -111,20 +112,7 @@ In `hosts` file `host_name` is used to create the `/etc/hosts` file.
     hadoopcluster
 
 
-## Step 4. Post Installation.
 
-This is hadoop user creation after installation.
-If we need more users then we need to add them in role `post_install_setups`.
-
-Current we will create a user called `stormadmin`. More details in `roles/post_install_setups/tasks/create_hadoop_user.yml`
-
-    #
-    # Creating a Storm User on Namenode/ This will eventually be a edge node.
-    #
-    - hosts: namenodes
-      remote_user: root
-      roles:
-        - post_install_setups
 
     
 
@@ -176,4 +164,18 @@ This role will install and configure hadoop installation. Update files.
 6. `hadoop-env.sh` Update `JAVA_HOME` come from `group_vars`. 
 
 
+### post_install_setups
 
+
+This is hadoop user creation after installation.
+If we need more users then we need to add them in role `post_install_setups`.
+
+Current we will create a user called `stormadmin`. More details in `roles/post_install_setups/tasks/create_hadoop_user.yml`
+
+    #
+    # Creating a Storm User on Namenode/ This will eventually be a edge node.
+    #
+    - hosts: namenodes
+      remote_user: root
+      roles:
+        - post_install_setups
