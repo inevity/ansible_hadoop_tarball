@@ -3,7 +3,7 @@
 
 This is a simple Hadoop playbook, to quickly start hadoop running on in a cluster.
 
-Here is the Script Location on Github: https://github.com/zubayr/ansible_zookeeper_tarball
+Here is the Script Location on Github: https://github.com/zubayr/ansible_hadoop_tarball
 
 Below are the steps to get started.
 
