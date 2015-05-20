@@ -135,4 +135,45 @@ Execute below command.
     ansible-playbook ansible_hadoop.yml -i hosts --ask-pass
     
 
+## Details about each Playbook 'Roles'. 
+
+Details about each Role.
+
+### commons
+
+This role is used to update OS parameters and will update the below files.
+
+1. sysctl.conf
+2. limits.conf
+3. 90-nproc.cong
+4. `/etc/hosts`
  
+`/etc/hosts` file will get the server information from the `[allnodes]` group in the `hosts` file.
+
+NOTE : Commons will update the `HOSTNAME` of the server as well as per these entries.
+
+### jdk 
+
+This role install jdk1.7. Installation path come from `group_vars/all` with variable `java_home`.
+
+### ssh_known_hosts
+
+This role will create ssh known hosts for all the hosts in the `hosts` file.
+
+### ssh_password_lss
+
+This role will make `hadoop_user` passwordless user for `hadoop` nodes.
+
+### cdh5_hadoop_commons_tarball
+
+This role will install and configure hadoop installation. Update files.
+
+1. `core-site.xml` Add Namenode.
+2. `hdfs-site.xml` Update hdfs parameters, come from `default/main.yml`.
+3. `mapred-site.xml` Update MR information.
+4. `yarn-site.xml` Update Yarn. 
+5. `slaves` Update slaves information come from `hosts` file.
+6. `hadoop-env.sh` Update `JAVA_HOME` come from `group_vars`. 
+
+
+
