@@ -84,7 +84,10 @@ hadoop_map_reduce:
   mr_map_java_opts: -Xmx1024m
   mr_reduce_java_opts: -Xmx2048m
  
-java_home: /usr/local/java/jdk 
+# --------------------------------------
+# JAVA Variables.
+# --------------------------------------
+java_home: /usr/local/java/jdk
 
 
 
