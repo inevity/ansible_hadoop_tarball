@@ -157,7 +157,7 @@ Global Vars can be found in the location `group_vars/all`.
 
 ## Step 2. User information come from `group_vars`.
 
-Username can be changed in the Global Vars, `zookeeper_user`.
+Username can be changed in the Global Vars, `hadoop_user`.
 Currently the password is `hdadmin@123`
 
 Password can be generated using the below python snippet.
